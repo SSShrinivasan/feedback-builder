@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feedback Categories</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .container {
+      width: 420px;
+    }
+
+    .label {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      color: #111827;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drag {
+      font-size: 16px;
+      color: #9ca3af;
+      cursor: grab;
+    }
+
+    .text {
+      font-size: 15px;
+      color: #111827;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0d9488;
+      cursor: pointer;
+    }
+
+    .add-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 15px;
+      cursor: pointer;
+      color: #111827;
+    }
+
+    .add-btn:hover {
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="label">non</div>
+
+    <h2>Choose the categories for feedback rating</h2>
+    <div class="desc">
+      After your customer gives their rating, they will be asked to choose the
+      reason from these categories.
+    </div>
+
+    <div class="card">
+      <div class="item">
+        <div class="left">
+          <span class="drag">⋮⋮</span>
+          <span class="text">Ambience</span>
+        </div>
+        <input type="checkbox" checked />
+      </div>
+
+      <div class="item">
+        <div class="left">
+          <span class="drag">⋮⋮</span>
+          <span class="text">Cleanliness</span>
+        </div>
+        <input type="checkbox" checked />
+      </div>
+
+      <div class="item">
+        <div class="left">
+          <span class="drag">⋮⋮</span>
+          <span class="text">Value for money</span>
+        </div>
+        <input type="checkbox" checked />
+      </div>
+
+      <div class="item">
+        <div class="left">
+          <span class="drag">⋮⋮</span>
+          <span class="text">Food</span>
+        </div>
+        <input type="checkbox" />
+      </div>
+
+      <div class="item">
+        <div class="left">
+          <span class="drag">⋮⋮</span>
+          <span class="text">Service</span>
+        </div>
+        <input type="checkbox" />
+      </div>
+    </div>
+
+    <button class="add-btn">+ Add More</button>
+  </div>
+
+</body>
+</html>

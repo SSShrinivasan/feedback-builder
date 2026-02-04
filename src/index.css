@@ -1,0 +1,97 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.left {
+  width: 40%;
+  background: #f4fbfc;
+  padding: 20px;
+}
+
+.right {
+  width: 60%;
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.emoji {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: teal;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.rating-img {
+  width: 32px;          /* ✅ correct size */
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.rating-img.active {
+  transform: scale(1.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+.rating-img:hover {
+  transform: scale(1.15);
+}
+.rating-row {
+  display: flex;
+  gap: 16px;          /* 👈 increase this value */
+  margin-top: 12px;
+}
+.category-list {
+  margin-top: 16px;
+  background: #f5fbfa;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.category-item:last-child {
+  border-bottom: none;
+}
+
+.check {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #e0e0e0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check.active {
+  background: teal;
+}
