@@ -30,10 +30,8 @@ export default function LeftPreview({ data, updateData }) {
   return (
     <div className="left">
       <div className="card">
-        <h3>Hello name  your feedback is important to us!</h3>
-
-        <p>{data.question}</p>
-
+    <h3>Hello name your feedback is important to us!</h3>
+    <p>{data.question}</p>
         <div className="rating-row">
           {RATINGS.map((r, index) => (
             <img

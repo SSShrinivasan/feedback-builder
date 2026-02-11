@@ -1,22 +1,16 @@
-
-import React, { useState } from "react";
-
 export default function RightForm({
   step,
   data,
-  setData,
   toggleCategory,
   toggleHearAbout,
   toggleReward,
   updateData,
   onNext,
   onBack,
-  
-}) {
-
+}){
   const [showInput, setShowInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-const handleAddCategory = () => {
+  const handleAddCategory = () => {
   const trimmed = newCategory.trim();
   if (!trimmed) return;
 
@@ -25,41 +19,15 @@ const handleAddCategory = () => {
     trimmed
   ];
 
-  updateData("categories", {
-    ...data.categories,
-    options: updatedOptions
-  });
+  updateData("categories.options", updatedOptions);
 
   setNewCategory("");
   setShowInput(false);
-};
-const toggleChannel = (channel) => {
-  setData(prev => ({
-    ...prev,
-    collectionMethod: {
-      ...prev.collectionMethod,
-      channels: {
-        ...prev.collectionMethod.channels,
-        [channel]: !prev.collectionMethod.channels[channel]
-      }
-    }
-  }));
-};
-
-const setCollectionType = (type) => {
-  setData(prev => ({
-    ...prev,
-    collectionMethod: {
-      ...prev.collectionMethod,
-      type
-    }
-  }));
 };
 
 
   return (
     <div className="right">
-
       {/* STEP 1 */}
       {step === 1 && (
         <>
@@ -86,6 +54,7 @@ const setCollectionType = (type) => {
           <button onClick={onNext}>Next</button>
         </>
       )}
+      
 
       {/* STEP 2 */}
       {step === 2 && (
@@ -98,15 +67,12 @@ const setCollectionType = (type) => {
 
           <div className="category-list">
             {data.categories.options.map((cat) => {
-              const isSelected =
-                data.categories.selected.includes(cat);
+              const isSelected = data.categories.selected.includes(cat);
 
               return (
                 <div
                   key={cat}
-                  className={`category-row ${
-                    isSelected ? "selected" : ""
-                  }`}
+                  className={`category-row ${isSelected ? "selected" : ""}`}
                 >
                   <div className="left">
                     <input
@@ -117,38 +83,16 @@ const setCollectionType = (type) => {
                     <span className="label">{cat}</span>
                   </div>
 
-                  <span
-                    className={`tick ${
-                      isSelected ? "active" : ""
-                    }`}
-                  ></span>
+                  <span className={`tick ${isSelected ? "active" : ""}`}></span>
                 </div>
               );
             })}
           </div>
 
-          {/* Add More */}
-          <button
-            className="add-more"
-            onClick={() => setShowInput(true)}
-          >
+          <button className="add-more" onClick={() => {handleAddCategory}}>
             + Add More
           </button>
-
-          {showInput && (
-            <div className="input-row">
-              <input
-                value={newCategory}
-                onChange={(e) =>
-                  setNewCategory(e.target.value)
-                }
-                placeholder="Add option here"
-              />
-              <button onClick={handleAddCategory}>
-                + Add
-              </button>
-            </div>
-          )}
+          
 
           <div className="nav-buttons">
             <button onClick={onBack}>Back</button>
@@ -161,42 +105,27 @@ const setCollectionType = (type) => {
       {step === 3 && (
         <>
           <h2>Ask your customers</h2>
-          <p className="subtext">
-            How did you hear about us?
-          </p>
+          <p className="subtext">How did you hear about us?</p>
 
           <div className="option-list">
             {data.hearAbout.options.map((option) => {
-              const isSelected =
-                data.hearAbout.selected.includes(option);
-                //for input checkbox
+              const isSelected = data.hearAbout.selected.includes(option);
 
               return (
                 <div
                   key={option}
-                  className={`option-row ${
-                    isSelected ? "selected" : ""
-                  }`}
-                
+                  className={`option-row ${isSelected ? "selected" : ""}`}
+                  onClick={() => toggleHearAbout(option)}
                 >
-                  
-                   <input
-        type="checkbox"
-        checked={isSelected}
-        onChange={() => toggleHearAbout(option)}
-      />
                   <span>{option}</span>
-                  {isSelected && (
-                        <span
-                    className={`tick ${
-                      isSelected ? "active" : ""
-                    }`}
-                  ></span>
-                  )}
+                  {isSelected && <span className="check">✓</span>}
                 </div>
               );
             })}
           </div>
+          <button className="add-more" onClick={() => {/* implement add option */}}>
+            + Add More
+          </button>
 
           <div className="nav-buttons">
             <button onClick={onBack}>Back</button>
@@ -208,10 +137,7 @@ const setCollectionType = (type) => {
       {/* STEP 4 */}
       {step === 4 && (
         <>
-          <h2>
-            Now, let's give your customers a reward
-            for sharing feedback
-          </h2>
+          <h2>Now, let's give your customers a reward for sharing feedback</h2>
 
           <div className="reward-card">
             <div className="reward-header">
@@ -228,26 +154,33 @@ const setCollectionType = (type) => {
             </div>
 
             <input
-  type="number"
-  value={data.reward.points}
-  disabled={!data.reward.enabled}
-  onChange={(e) =>
-    setData(prev => ({
-      ...prev,
-      reward: {
-        ...prev.reward,
-        points: Number(e.target.value) || 0
-      }
-    }))
-  }
-/>
-
+              type="number"
+              value={data.reward.points}
+              disabled={!data.reward.enabled}
+              onChange={(e) =>
+                updateData("reward.points", Number(e.target.value) || 0)
+              }
+            />
 
             <p className="reward-preview">
               {data.reward.enabled
                 ? `${data.reward.points} points will be rewarded`
                 : "Reward disabled"}
             </p>
+
+            {!data.reward.enabled && (
+              <div className="reward-info">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+                  alt="reward"
+                  width="20"
+                />
+                <span>
+                  You need to activate loyalty to give bonus points reward for
+                  feedback
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="nav-buttons">
@@ -260,61 +193,66 @@ const setCollectionType = (type) => {
       {/* STEP 5 */}
       {step === 5 && (
         <>
-          <h2>
-            Decide when you want to ask for feedback
-          </h2>
+          <h2>Decide when you want to ask for feedback</h2>
 
+          <p className="subtext">
+            Customers can give feedback for up to <strong>5 days</strong> after
+            the feedback communication.
+          </p>
+
+          {/* IMMEDIATE */}
           <div
             className={`timing-card ${
-              data.feedbackTiming.type ===
-              "immediate"
-                ? "active"
-                : ""
+              data.feedbackTiming.type === "immediate" ? "active" : ""
             }`}
           >
             <div className="timing-header">
-              <span>
-                Immediately with purchase
-              </span>
+              <span>Immediately with purchase</span>
               <input
                 type="radio"
-                checked={
-                  data.feedbackTiming.type ===
-                  "immediate"
-                }
-                onChange={() =>
-                  updateData(
-                    "feedbackTiming.type",
-                    "immediate"
-                  )
-                }
+                checked={data.feedbackTiming.type === "immediate"}
+                onChange={() => updateData("feedbackTiming.type", "immediate")}
               />
+            </div>
+
+            <div className="timing-info">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
+                alt="receipt"
+                width="22"
+              />
+              <span>
+                Select this if customers have experienced your product or
+                service by the time they pay.
+              </span>
             </div>
           </div>
 
+          {/* DELAYED */}
           <div
             className={`timing-card ${
-              data.feedbackTiming.type ===
-              "delayed"
-                ? "active"
-                : ""
+              data.feedbackTiming.type === "delayed" ? "active" : ""
             }`}
           >
             <div className="timing-header">
               <span>After a delay</span>
               <input
                 type="radio"
-                checked={
-                  data.feedbackTiming.type ===
-                  "delayed"
-                }
-                onChange={() =>
-                  updateData(
-                    "feedbackTiming.type",
-                    "delayed"
-                  )
-                }
+                checked={data.feedbackTiming.type === "delayed"}
+                onChange={() => updateData("feedbackTiming.type", "delayed")}
               />
+            </div>
+
+            <div className="timing-info">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png"
+                alt="delay"
+                width="22"
+              />
+              <span>
+                Select this if customers pay first and experience your product
+                or service later.
+              </span>
             </div>
           </div>
 
@@ -324,9 +262,6 @@ const setCollectionType = (type) => {
           </div>
         </>
       )}
-
     </div>
   );
-  
-
 }

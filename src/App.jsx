@@ -41,6 +41,14 @@ export default function App() {
           feedbackTiming: {
   type: "immediate", // "immediate" | "delayed"
 },
+  collectionMethod: {
+    type: "external", // "external" | "tablet"
+    channels: {
+      whatsapp: false,
+      sms: false,
+      email: false,
+    }
+  }
 
 
   });
@@ -60,23 +68,7 @@ export default function App() {
     };
   });
 };
-//down here is using checked instead of selected
-  
-// const toggleCategory = (category) => {
-//   setData(prev => {
-//     const selected = prev.categories.selected;
 
-//     return {
-//       ...prev,
-//       categories: {
-//         ...prev.categories,
-//         selected:  checked.includes(category)
-//           ? checked.filter(c => c !== category) // untick
-//           : [...checked, category], // tick
-//       },
-//     };
-//   });
-// };
 ///page 3 toggle setup
 const toggleHearAbout = (option) => {
   setData((prev) => {
@@ -114,9 +106,15 @@ const updateRewardPoints = (value) => {
     },
   }));
 };
-  const updateData = (key, value) => {
-    setData(prev => ({ ...prev, [key]: value }));
-  };
+//page 1 update data
+const updateData = (key, value) => {
+  setData((prev) => ({
+    ...prev,
+    [key]: value
+  }));
+};
+//last page
+
 
   return (
     <div className="layout">
