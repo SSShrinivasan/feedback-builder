@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback Demo</title>
+</head>
+<body>
+
+<h1>Feedback Survey</h1>
+<div id="survey"></div>
+
+<script>
+  const data = JSON.parse(localStorage.getItem("feedbackData"));
+
+  if (data) {
+    document.getElementById("survey").innerHTML = `
+      <h2>${data.question}</h2>
+      <p>Positive: ${data.positiveText}</p>
+      <p>Negative: ${data.negativeText}</p>
+      <p>Categories: ${data.categories.selected.join(", ")}</p>
+      <p>Den=mo</p>
+    `;
+  }
+</script>
+
+</body>
+</html>

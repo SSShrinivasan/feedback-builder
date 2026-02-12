@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 export default function RightForm({
@@ -11,50 +10,32 @@ export default function RightForm({
   updateData,
   onNext,
   onBack,
-  
+  setCollectionType,
+  toggleChannel,
+  handlePublish,
 }) {
-
   const [showInput, setShowInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-const handleAddCategory = () => {
-  const trimmed = newCategory.trim();
-  if (!trimmed) return;
 
-  const updatedOptions = [
-    ...data.categories.options,
-    trimmed
-  ];
+  const handleAddCategory = () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed) return;
 
-  updateData("categories", {
-    ...data.categories,
-    options: updatedOptions
-  });
+    const updatedOptions = [
+      ...data.categories.options,
+      trimmed,
+    ];
 
-  setNewCategory("");
-  setShowInput(false);
-};
-const toggleChannel = (channel) => {
-  setData(prev => ({
-    ...prev,
-    collectionMethod: {
-      ...prev.collectionMethod,
-      channels: {
-        ...prev.collectionMethod.channels,
-        [channel]: !prev.collectionMethod.channels[channel]
-      }
-    }
-  }));
-};
+    updateData("categories", {
+      ...data.categories,
+      options: updatedOptions,
+    });
 
-const setCollectionType = (type) => {
-  setData(prev => ({
-    ...prev,
-    collectionMethod: {
-      ...prev.collectionMethod,
-      type
-    }
-  }));
-};
+    setNewCategory("");
+    setShowInput(false);
+  };
+  
+
 
 
   return (
@@ -104,9 +85,8 @@ const setCollectionType = (type) => {
               return (
                 <div
                   key={cat}
-                  className={`category-row ${
-                    isSelected ? "selected" : ""
-                  }`}
+                  className={`category-row ${isSelected ? "selected" : ""
+                    }`}
                 >
                   <div className="left">
                     <input
@@ -118,16 +98,14 @@ const setCollectionType = (type) => {
                   </div>
 
                   <span
-                    className={`tick ${
-                      isSelected ? "active" : ""
-                    }`}
+                    className={`tick ${isSelected ? "active" : ""
+                      }`}
                   ></span>
                 </div>
               );
             })}
           </div>
 
-          {/* Add More */}
           <button
             className="add-more"
             onClick={() => setShowInput(true)}
@@ -169,29 +147,25 @@ const setCollectionType = (type) => {
             {data.hearAbout.options.map((option) => {
               const isSelected =
                 data.hearAbout.selected.includes(option);
-                //for input checkbox
 
               return (
                 <div
                   key={option}
-                  className={`option-row ${
-                    isSelected ? "selected" : ""
-                  }`}
-                
-                >
-                  
-                   <input
-        type="checkbox"
-        checked={isSelected}
-        onChange={() => toggleHearAbout(option)}
-      />
-                  <span>{option}</span>
-                  {isSelected && (
-                        <span
-                    className={`tick ${
-                      isSelected ? "active" : ""
+                  className={`option-row ${isSelected ? "selected" : ""
                     }`}
-                  ></span>
+                >
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleHearAbout(option)}
+                  />
+                  <span>{option}</span>
+
+                  {isSelected && (
+                    <span
+                      className={`tick ${isSelected ? "active" : ""
+                        }`}
+                    ></span>
                   )}
                 </div>
               );
@@ -228,20 +202,19 @@ const setCollectionType = (type) => {
             </div>
 
             <input
-  type="number"
-  value={data.reward.points}
-  disabled={!data.reward.enabled}
-  onChange={(e) =>
-    setData(prev => ({
-      ...prev,
-      reward: {
-        ...prev.reward,
-        points: Number(e.target.value) || 0
-      }
-    }))
-  }
-/>
-
+              type="number"
+              value={data.reward.points}
+              disabled={!data.reward.enabled}
+              onChange={(e) =>
+                setData(prev => ({
+                  ...prev,
+                  reward: {
+                    ...prev.reward,
+                    points: Number(e.target.value) || 0
+                  }
+                }))
+              }
+            />
 
             <p className="reward-preview">
               {data.reward.enabled
@@ -260,59 +233,47 @@ const setCollectionType = (type) => {
       {/* STEP 5 */}
       {step === 5 && (
         <>
-          <h2>
-            Decide when you want to ask for feedback
-          </h2>
+          <h2>Decide when you want to ask for feedback</h2>
 
           <div
-            className={`timing-card ${
-              data.feedbackTiming.type ===
-              "immediate"
-                ? "active"
-                : ""
-            }`}
+            className={`timing-card ${data.feedbackTiming.type === "immediate" ? "active" : ""
+              }`}
           >
             <div className="timing-header">
-              <span>
-                Immediately with purchase
-              </span>
+              <span>Immediately with purchase</span>
               <input
                 type="radio"
-                checked={
-                  data.feedbackTiming.type ===
-                  "immediate"
-                }
+                checked={data.feedbackTiming.type === "immediate"}
                 onChange={() =>
-                  updateData(
-                    "feedbackTiming.type",
-                    "immediate"
-                  )
+                  setData(prev => ({
+                    ...prev,
+                    feedbackTiming: {
+                      ...prev.feedbackTiming,
+                      type: "immediate"
+                    }
+                  }))
                 }
               />
             </div>
           </div>
 
           <div
-            className={`timing-card ${
-              data.feedbackTiming.type ===
-              "delayed"
-                ? "active"
-                : ""
-            }`}
+            className={`timing-card ${data.feedbackTiming.type === "delayed" ? "active" : ""
+              }`}
           >
             <div className="timing-header">
               <span>After a delay</span>
               <input
                 type="radio"
-                checked={
-                  data.feedbackTiming.type ===
-                  "delayed"
-                }
+                checked={data.feedbackTiming.type === "delayed"}
                 onChange={() =>
-                  updateData(
-                    "feedbackTiming.type",
-                    "delayed"
-                  )
+                  setData(prev => ({
+                    ...prev,
+                    feedbackTiming: {
+                      ...prev.feedbackTiming,
+                      type: "delayed"
+                    }
+                  }))
                 }
               />
             </div>
@@ -325,8 +286,138 @@ const setCollectionType = (type) => {
         </>
       )}
 
-    </div>
-  );
-  
+      {/* STEP 6 */}
+      {step === 6 && (
+        <div className="collection-wrapper">
+          <h2>Next, let's decide how to collect feedback</h2>
+          <div className="collection-card">
 
+            <div className="collection-header-top">
+              <div>
+                <h3>External Link</h3>
+                <p>
+                  Capture feedback through a link sent on WhatsApp, SMS or Email
+                </p>
+              </div>
+            </div>
+
+            {/* Your original container moved here */}
+            <div className="channel-container">
+
+              {/* WhatsApp */}
+              <div
+                className={`channel-card ${data.channels.whatsapp ? "active" : ""}`}
+                onClick={() => toggleChannel("whatsapp")}
+              >
+                <div className="collection-header">
+                  <div className="channel-left">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+                      alt="WhatsApp"
+                      className="channel-icon"
+                    />
+                    <span>WhatsApp</span>
+                  </div>
+
+                  <div className="sb-checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={data.channels.whatsapp}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* SMS */}
+              <div
+                className={`channel-card ${data.channels.sms ? "active" : ""}`}
+                onClick={() => toggleChannel("sms")}
+              >
+                <div className="collection-header">
+                  <div className="channel-left">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/561/561127.png"
+                      alt="SMS"
+                      className="channel-icon"
+                    />
+                    <span>SMS</span>
+                  </div>
+
+                  <div className="sb-checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={data.channels.sms}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div
+                className={`channel-card ${data.channels.email ? "active" : ""}`}
+                onClick={() => toggleChannel("email")}
+              >
+                <div className="collection-header">
+                  <div className="channel-left">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/732/732200.png"
+                      alt="Email"
+                      className="channel-icon"
+                    />
+                    <span>Email</span>
+                  </div>
+
+                  <div className="sb-checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={data.channels.email}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="nav-buttons">
+            <button onClick={onBack}>Back</button>
+            <button onClick={onNext}>Next</button>
+          </div>
+
+        </div>
+
+      )}
+
+      {step === 7 && (
+        <>
+          <h2>Review & Publish</h2>
+
+          <h3>Question:</h3>
+          <p>{data.question}</p>
+
+          <h3>Selected Categories:</h3>
+          <p>{data.categories.selected.join(", ")}</p>
+
+          <h3>Channels:</h3>
+          <p>
+            {Object.entries(data.channels)
+              .filter(([_, value]) => value)
+              .map(([key]) => key)
+              .join(", ") || "None"}
+          </p>
+
+          <button onClick={handlePublish}>Publish</button>
+        </>
+      )}
+     
+
+
+    </div>
+
+
+  );
 }

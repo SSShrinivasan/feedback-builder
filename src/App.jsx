@@ -1,57 +1,69 @@
-import { useState } from "react";
+
+import React, { useState, useEffect } from "react";
+
 import LeftPreview from "./components/LeftPreview";
 import RightForm from "./components/RightForm";
 
 export default function App() {
     const [step, setStep] = useState(1);
 
-  const [data, setData] = useState({
-    question: "How was your experience?",
-    positiveText: "Glad to hear that. What did you like?",
-    negativeText: "Sorry to hear. Tell us what went wrong?",
-    rating: null,
+  const [data, setData] = useState(() => {
+  const saved = localStorage.getItem("feedbackData");
 
-    categories: {
-      options: [
-        "Ambience",
-        "Cleanliness",
-        "Value for money",
-        "Food",
-        "Service",
-      ],
-      selected: ["Ambience", "Cleanliness"],
-    },
+  return saved
+    ? JSON.parse(saved)
+    : {
+        question: "How was your experience?",
+        positiveText: "Glad to hear that. What did you like?",
+        negativeText: "Sorry to hear. Tell us what went wrong?",
+        rating: null,
 
-    hearAbout: {
-      enabled: true,
-      options: [
-        "Zomato / Swiggy",
-        "Social Media",
-        "Friends & Family",
-        "Walking by",
-        "Newspaper",
-      ],
-      selected: ["Zomato / Swiggy", "Social Media"],
-   },
-    reward:
-     {
-      enabled: true,
-      points: 0,
-     },
-          feedbackTiming: {
-  type: "immediate", // "immediate" | "delayed"
-},
-  collectionMethod: {
-    type: "external", // "external" | "tablet"
-    channels: {
-      whatsapp: false,
-      sms: false,
-      email: false,
-    }
-  }
+        categories: {
+          options: [
+            "Ambience",
+            "Cleanliness",
+            "Value for money",
+            "Food",
+            "Service",
+          ],
+          selected: ["Ambience", "Cleanliness"],
+        },
 
+        hearAbout: {
+          enabled: true,
+          options: [
+            "Zomato / Swiggy",
+            "Social Media",
+            "Friends & Family",
+            "Walking by",
+            "Newspaper",
+          ],
+          selected: ["Zomato / Swiggy", "Social Media"],
+        },
 
-  });
+        reward: {
+          enabled: true,
+          points: 0,
+        },
+
+        feedbackTiming: {
+          type: "immediate",
+        },
+
+        channels: {
+          whatsapp: false,
+          sms: false,
+          email: false,
+        },
+      };
+});
+//useEffect to saave data to local storage when it changes
+useEffect(() => {
+  localStorage.setItem("feedbackData", JSON.stringify(data));
+}, [data]);
+//removee after testin
+localStorage.removeItem("feedbackData");
+
   //page 2 toggle setup
   const toggleCategory = (category) => {
   setData((prev) => {
