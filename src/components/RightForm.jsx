@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function RightForm({
   step,
@@ -12,7 +14,7 @@ export default function RightForm({
   onBack,
   setCollectionType,
   toggleChannel,
-  handlePublish,
+  
 }) {
   const [showInput, setShowInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
@@ -34,6 +36,12 @@ export default function RightForm({
     setNewCategory("");
     setShowInput(false);
   };
+  const navigate = useNavigate();
+
+const handlePublish = () => {
+  navigate("/test");    
+};
+
   
 
 
